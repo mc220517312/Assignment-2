@@ -4,12 +4,23 @@ import matplotlib.pyplot as plt
 
 # Load the data
 sales_data_url = "https://raw.githubusercontent.com/mc220517312/Assignment-2/main/sales_data_na.csv"
-sales_data = pd.read_csv(sales_data_url, sep=',')
+sales_data_before_cleaning = pd.read_csv(sales_data_url, sep=',')
+
+# Box plot of revenue before cleaning
+plt.boxplot(sales_data_before_cleaning['Revenue'])
+plt.title('Box plot of revenue before cleaning')
+plt.show()
 
 # Clean the data
+sales_data = sales_data_before_cleaning.copy()
 sales_data.columns = sales_data.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('-', '_')
 sales_data = sales_data.drop_duplicates()
 sales_data = sales_data.dropna()
+
+# Box plot of revenue after cleaning
+plt.boxplot(sales_data['revenue'])
+plt.title('Box plot of revenue after cleaning')
+plt.show()
 
 # Most Profitable Year
 profit_by_year = sales_data.groupby('year')['profit'].sum()
